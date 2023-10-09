@@ -1,8 +1,11 @@
 package com.example.microserviceexchangerates.service;
 
+import com.example.microserviceexchangerates.controller.CurrencyController;
 import com.example.microserviceexchangerates.model.NbRbRate;
 import com.example.microserviceexchangerates.repository.NbRateRepository;
 import com.example.microserviceexchangerates.util.NbRbAPI;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,7 @@ import java.util.zip.Checksum;
 
 @Service
 public class NbRbService {
+    private static final Logger logger = LogManager.getLogger(NbRbService.class);
     @Autowired
     private NbRateRepository nbRateRepository;
     @Autowired
@@ -33,6 +37,7 @@ public class NbRbService {
         String change = String.format("%1$,.5f", calcChange);
         change = String.format("%s%s", (calcChange > 0 ? "+" : "-"), change);
         nbRbRate.setChange(change);
+        logger.info(String.format("getByDateCode %s, %s, %s.", date, code, nbRbRate.toString()));
         return nbRbRate;
     }
 
@@ -51,6 +56,7 @@ public class NbRbService {
                     )
             );
         }
+        logger.info(String.format("getByDate %s, collection size: %s",date, nbRbRates.length));
         return nbRbRates;
     }
 
@@ -74,16 +80,19 @@ public class NbRbService {
                     )
             );
         }
+        logger.info(String.format("getNbRbRateByDateCode. nbRbRate: %s",nbRbRate.toString()));
         return nbRbRate;
     }
 
     private Date convertStringToDate(String date) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        logger.info(String.format("convertStringToDate. String date: %s", formatter.parse(date)));
         return formatter.parse(date);
     }
 
     private String convertDateToString(Date date) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        logger.info(String.format("convertDateToString. Date from String: %s", formatter.format(date)));
         return formatter.format(date);
     }
 }

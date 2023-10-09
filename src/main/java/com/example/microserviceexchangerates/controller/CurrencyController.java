@@ -25,7 +25,6 @@ import java.util.*;
 @Transactional
 public class CurrencyController {
 
-    private static final Logger logger = LogManager.getLogger(CurrencyController.class);
     @Autowired
     private NbRbService nbRbService;
 

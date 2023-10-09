@@ -43,6 +43,18 @@ public class NbRbRate {
     @Transient
     private String change;
 
+    @Override
+    public String toString() {
+        return "NbRbRate{" +
+                "curCode=" + curCode +
+                ", curAbbreviation='" + curAbbreviation + '\'' +
+                ", curName='" + curName + '\'' +
+                ", curOfficialRate=" + curOfficialRate +
+                ", date=" + date +
+                ", change='" + change + '\'' +
+                '}';
+    }
+
     public void setChange(String change) {
         this.change = change;
     }
