@@ -1,15 +1,12 @@
 package com.example.microserviceexchangerates.service;
 
-import com.example.microserviceexchangerates.controller.CurrencyController;
 import com.example.microserviceexchangerates.model.NbRbRate;
 import com.example.microserviceexchangerates.repository.NbRateRepository;
 import com.example.microserviceexchangerates.util.NbRbAPI;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,7 +19,7 @@ public class NbRbService {
     private static final Logger logger = LogManager.getLogger(NbRbService.class);
     @Autowired
     private NbRateRepository nbRateRepository;
-    private NbRbAPI nbRbAPI = new NbRbAPI();
+    private final NbRbAPI nbRbAPI = new NbRbAPI();
 
     public NbRbRate getByDateCode(String date, String code) throws ParseException {
         Date formatDate = this.convertStringToDate(date);
@@ -36,7 +33,7 @@ public class NbRbService {
         String change = String.format("%1$,.5f", calcChange);
         change = String.format("%s%s", (calcChange > 0 ? "+" : "-"), change);
         nbRbRate.setChange(change);
-        logger.info(String.format("getByDateCode %s, %s, %s.", date, code, nbRbRate.toString()));
+        logger.info(String.format("getByDateCode %s, %s, %s.", date, code, nbRbRate));
         return nbRbRate;
     }
 
