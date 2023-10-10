@@ -22,8 +22,7 @@ public class NbRbService {
     private static final Logger logger = LogManager.getLogger(NbRbService.class);
     @Autowired
     private NbRateRepository nbRateRepository;
-    @Autowired
-    private NbRbAPI nbRbAPI;
+    private NbRbAPI nbRbAPI = new NbRbAPI();
 
     public NbRbRate getByDateCode(String date, String code) throws ParseException {
         Date formatDate = this.convertStringToDate(date);
